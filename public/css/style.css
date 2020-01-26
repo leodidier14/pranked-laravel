@@ -1,0 +1,237 @@
+/*---------------------GENERAL--------------------*/
+
+* {
+    font-family: "Lucida Console";
+}
+
+body {
+    padding-top: 56.7px;
+}
+
+.blackred-btn {
+background-color: black;
+color : rgba(255, 255, 255, 0.7);
+padding : 5px 5px;
+border: 2px solid rgba(255, 255, 255, 0.7);
+box-shadow: 2px 2px 2px 0 black;
+transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.blackred-btn:hover {
+text-decoration: none;
+color : rgba(255, 255, 255, 0.7);
+}
+.blackred-btn:active {
+text-decoration: none;
+color : rgba(255, 255, 255, 0.7);
+box-shadow: 0 0 0 black, inset 4px 4px 4px black;
+transform: translate(6px, 6px);
+}
+
+/*------------------------------------------------*/
+
+/*---------------------NAVBAR---------------------*/
+
+.navbar {
+    background-color: black;
+}
+
+nav .navbar-nav li a{
+     color: rgba(255, 255, 255, 0.7)!important;
+     position: relative;
+      text-decoration: none;
+      overflow: hidden;
+      font-size: 14px;
+  }
+
+.fa-bars {
+color: rgba(255, 255, 255, 0.7);
+}
+
+.brandlogo-img {
+height: 30px
+}
+
+@media screen and (min-width: 1400px) {
+    .navbar.navbar-expand-lg {
+        padding-left: 200px;
+        padding-right: 200px;
+            }
+}
+
+nav .navbar-nav li a:hover, nav .navbar-nav a.active {
+color: rgba(255, 0, 0, 0.9)!important;
+}
+
+.red-textoverlay-link{
+position: absolute;
+display: block;
+color: rgba(255, 255, 255, 0.7);
+}
+
+.red-textoverlay-link:nth-child(1)  {
+bottom: -100%;
+right: -100%;
+width: 100%;
+height: 2px;
+}
+
+a:hover .red-textoverlay-link:nth-child(1), nav .navbar-nav .active .red-textoverlay-link:nth-child(1) {
+bottom: 60%;
+right: 0%;
+transition: 0.5s;
+}
+
+/*------------------------------------------------*/
+
+/*---------------------FOOTER---------------------*/
+
+footer {
+background-color: black;
+color: rgba(255, 255, 255, 0.7);
+font-size: 12px;
+position: relative;
+  width: 100%;
+  text-align: center;
+  bottom: 0;
+}
+
+footer ul {
+margin : 0;
+padding-top: 10px;
+}
+
+.red-copyright-link {
+color: rgba(255, 0, 0, 0.9)!important;
+}
+
+footer li, footer a {
+color: rgba(255, 255, 255, 0.7)!important;
+ position: relative;
+  text-decoration: none;
+  overflow: hidden;
+  display: inline-block;
+  padding-right: 5px;
+}
+
+footer a:hover {
+color: rgba(255, 0, 0, 0.9)!important;
+  text-decoration: none;
+}
+
+/*------------------------------------------------*/
+
+/*---------------------SHOPPING CARD--------------*/
+.header-shoppingcart {
+background-color: black;
+color: rgba(255, 255, 2255, 0.7)!important;
+}
+
+
+.right-menu-shoppingcart {
+background: rgba(0,0,0, 0.5);
+left: 0;
+opacity: 0;
+position: fixed;
+top: 0;
+transition: opacity 0.5s, visibility 0.5s;
+visibility: hidden;
+width: 100%;
+height: 100%;
+z-index: 40000;
+}
+
+.shoppingcart {
+color: #000;
+position: absolute;
+height: 100%;
+width: 560px;
+max-width: 85vw;
+padding: 12px;
+margin: 0;
+background: #fff;
+z-index: 99;
+overflow-y: auto;
+
+-webkit-overflow-scrolling: touch;
+-ms-overflow-style: -ms-autohiding-scrollbar;
+transition: background 0.5s, transform 0.5s;
+}
+
+.shoppingcart--left {
+-webkit-transform: translateX(-100%);
+transform: translateX(-100%);
+}
+.right-shoppingcart {
+-webkit-transform: translateX(100%);
+transform: translateX(100%);
+position: absolute;
+right: 0;
+}
+.open-shoppingcart {
+cursor: pointer;
+}
+
+.close-shoppingcart {
+cursor: pointer;
+}
+
+.shoppingcart__expanded {
+-webkit-transform: translateX(0);
+transform: translateX(0);
+visibility: visible;
+opacity: 1;
+}
+
+@media (max-width: 450px) {
+.table td, .table th {
+padding: 0;
+}
+
+th.text-center {
+font-size : 12px;
+
+}
+}
+
+.td-table-shoppingcart {
+vertical-align: middle!important;
+}
+
+
+.price-content-shoppingcart {
+width: 80px;
+}
+
+
+.underline-title  {
+display:inline-block;
+border-bottom:1px solid black;
+padding-bottom:2px;
+}
+
+.underline-title-category {
+margin-bottom: 30px;
+margin-top: 40px;
+font-size: 20px;
+}
+
+.align-items-shop {
+margin-bottom: 30px;
+}
+
+.item-content-shop {
+width: 220px;
+}
+
+.banner {
+height: 200px;
+background-color:
+black; margin-top: 50px;
+color: white;
+font-size: 80px;
+opacity: 1;
+}
+
+.item-content-shoppingcart {
+width: 50px;
+}
