@@ -17,7 +17,7 @@
         <div class="navbar-collapse collapse w-100 order-1 order-lg-0 dual-collapse" id="left-menu-navbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link" href="{{ route('products.index') }}">
                         <span class="red-textoverlay-link">SHOP</span>SHOP
                     </a>
                 </li>
@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('contact') }}">
                         <span class="red-textoverlay-link">CONTACT</span>CONTACT
                     </a>
                 </li>
@@ -35,7 +35,7 @@
         </div>
         <div class="mx-auto order-0" id="mid-menu-navbar">
             <a class="navbar-brand mx-auto" href="#">
-                <img class="brandlogo-img" src="{{URL::asset('/img/logo.png')}}" alt="Pranked">
+                <img class="brandlogo-img" src="" alt="Pranked">
                 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target=".dual-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -162,6 +162,8 @@
 </footer>
 
 </html>
+
+
 
 
 

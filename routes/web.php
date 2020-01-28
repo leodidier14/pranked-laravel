@@ -19,8 +19,18 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/', 'ShopController@index')->name('shop');
+Route::get('/', 'ProductController@index')->name('products.index');
+Route::get('/{slug}', 'ProductController@show')->name('products.show');
 
-Route::get('/faq', 'Faq@index')->name('faq');
 
-Route::get('/contact', 'Contact@index')->name('contact');
+Route::get('/faq', 'FaqController@index')->name('faq');
+
+Route::get('/contact', 'ContactController@index')->name('contact');
+
+Route::get('/shop/create', 'ShopController@create')->name('shop.create');
+
+Route::get('/shop', 'ShopController@store')->name('shop.store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

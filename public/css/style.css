@@ -235,3 +235,13 @@ opacity: 1;
 .item-content-shoppingcart {
 width: 50px;
 }
+
+.item-shop {
+    margin-bottom: 50px;
+}
+
+.item-shop a {
+    text-decoration: none;
+    color: black;
+}
+

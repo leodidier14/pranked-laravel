@@ -25,23 +25,7 @@ jQuery(function($){
   });
 
 
-
-  /*jQuery(function($){
-  $(".nav-link").on('click', function(event){
-
-   var current = $(".active");
-    current[0].className = current[0].className.replace(" active", "");
-    this.className += " active";
-
-  });
-
-  });
-  */
-
-
-
-
-      $(window).scroll(function(){
+     $(window).scroll(function(){
       $(".banner").css("opacity", 1 - $(window).scrollTop() / 200);
     });
 
