@@ -22,6 +22,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'ProductController@index')->name('products.index');
 Route::get('/{slug}', 'ProductController@show')->name('products.show');
 
+Route::post('/panier/ajouter', 'CartController@store')->name('cart.store');
+
+
+
+
+
 
 Route::get('/faq', 'FaqController@index')->name('faq');
 

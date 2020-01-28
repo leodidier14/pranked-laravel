@@ -35,7 +35,7 @@
         </div>
         <div class="mx-auto order-0" id="mid-menu-navbar">
             <a class="navbar-brand mx-auto" href="#">
-                <img class="brandlogo-img" src="" alt="Pranked">
+                <img class="brandlogo-img" src="https://www.zupimages.net/up/20/05/uaef.png">
                 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target=".dual-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -51,7 +51,7 @@
                 <li class="nav-item">
                     <span class="open-shoppingcart" data-menu="#main-nav">
 								<a class="nav-link" href="#" id="navbar-shoppingcart">
-									<i class="fas fa-shopping-cart" id="nb-shoppingcart">[2]</i>
+									<i class="fas fa-shopping-cart" id="nb-shoppingcart">[{{ Cart::count() }}]</i>
 								</a>
 								 </span>
                 </li>
@@ -78,6 +78,11 @@
 </div>
 
 <div class="page-content">
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
     @yield('content')
 </div>
 
@@ -94,6 +99,7 @@
                 <span class="menu-shopping-cart">PANIER</span>
             </div>
 
+            @if (Cart::count() > 0)
             <table class="table" id="table-shoppingcart">
                 <thead>
                     <tr>
@@ -105,26 +111,23 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach (Cart::content() as $product)
                     <tr>
-                        <th><img class="text-center item-content-shoppingcart" src="https://cdn.shopify.com/s/files/1/0277/2202/2987/products/TEE_360x.png?v=1573687645"></th>
+
+                        <th><img class="text-center item-content-shoppingcart" src="{{ $product->model->image }}"></th>
                         <td class="text-center td-table-shoppingcart size-content-shoppingcart">S</td>
                         <td class="td-table-shoppingcart price-content-shoppingcart">
                             <input type="text" class="form-control text-center">
                         </td>
-                        <td class="text-center td-table-shoppingcart price-content-shoppingcart">€35</td>
+                        <td class="text-center td-table-shoppingcart price-content-shoppingcart">{{ $product->model->formattedprice() }}</td>
                         <td class="text-center td-table-shoppingcart delete-content-shoppingcart">X</td>
                     </tr>
-                    <tr>
-                        <th><img class="text-center item-content-shoppingcart" src="https://cdn.shopify.com/s/files/1/0277/2202/2987/products/TEE_360x.png?v=1573687645"></th>
-                        <td class="text-center td-table-shoppingcart size-content-shoppingcart">S</td>
-                        <td class="td-table-shoppingcart price-content-shoppingcart">
-                            <input type="text" class="form-control text-center">
-                        </td>
-                        <td class="text-center td-table-shoppingcart price-content-shoppingcart">€35</td>
-                        <td class="text-center td-table-shoppingcart delete-content-shoppingcart">X</td>
-                    </tr>
+            @endforeach
                 </tbody>
             </table>
+            @else
+            <p>Votre panier est vide</p>
+            @endif
 
             <div>
                 <div style="text-align: right">
