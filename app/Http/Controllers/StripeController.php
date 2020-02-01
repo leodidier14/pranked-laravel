@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Stripe\Stripe;
+use Stripe\PaymentIntent;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use App\Product;
+use Illuminate\Support\Arr;
 
-
-class CartController extends Controller
+class StripeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,18 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('layout.menu');
+        Stripe::setApiKey('sk_test_YG0xwFh5oNQ6SLM5SfUXTMwE00w6sysaqW');
+
+        $intent = PaymentIntent::create([
+            'amount' => round(Cart::subtotal()),
+            'currency' => 'eur',
+        ]);
+
+        $clientSecret = Arr::get($intent, 'client_secret');
+
+        return view('stripe.index', [
+            'clientSecret' => $clientSecret
+        ]);
     }
 
     /**
@@ -26,7 +38,7 @@ class CartController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -37,25 +49,8 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-
-        $duplicata = Cart::search(function ($cartItem, $rowId) use ($request) {
-            return $cartItem->id == $request->product_id;
-        });
-
-
-        if ($duplicata->isNotEmpty()) {
-            return redirect()->route('products.index')->with('success', 'Produit à déjà été ajouté au panier');
-        }
-
-        $product = Product::find($request->product_id);
-
-        Cart::add($product->id, $product->name, 1, $product->price)
-        ->associate('App\Product');
-
-        return redirect()->route('products.index')->with('success', 'Produit ajouté au panier');
-
+        //
     }
-
 
     /**
      * Display the specified resource.
@@ -97,11 +92,8 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($rowId)
+    public function destroy($id)
     {
-        Cart::remove($rowId);
-
-        return back()->with('success', 'Le produit a été supprimé');
-
+        //
     }
 }

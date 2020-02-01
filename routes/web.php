@@ -20,22 +20,20 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', 'ProductController@index')->name('products.index');
-Route::get('/{slug}', 'ProductController@show')->name('products.show');
+Route::get('/shop/{slug}', 'ProductController@show')->name('products.show');
 
 Route::post('/panier/ajouter', 'CartController@store')->name('cart.store');
+Route::delete('/panier/{id}', 'CartController@destroy')->name('cart.destroy');
 
-
-
+Route::get('/paiement', 'StripeController@index')->name('stripe.index');
 
 
 
 Route::get('/faq', 'FaqController@index')->name('faq');
 
-Route::get('/contact', 'ContactController@index')->name('contact');
+Route::get('/contact', 'ContactController@index')->name('contact.index');
 
-Route::get('/shop/create', 'ShopController@create')->name('shop.create');
 
-Route::get('/shop', 'ShopController@store')->name('shop.store');
 
 Auth::routes();
 
