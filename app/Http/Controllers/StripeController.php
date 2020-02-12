@@ -17,6 +17,11 @@ class StripeController extends Controller
      */
     public function index()
     {
+        if(Cart::count() <= 0 ) {
+            return redirect()->route('products.index');
+        }
+
+
         Stripe::setApiKey('sk_test_YG0xwFh5oNQ6SLM5SfUXTMwE00w6sysaqW');
 
         $intent = PaymentIntent::create([
@@ -49,7 +54,10 @@ class StripeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Cart::destroy();
+        $data = $request->json()->all();
+
+        return $data['paymentIntent'];
     }
 
     /**

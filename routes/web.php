@@ -26,14 +26,16 @@ Route::post('/panier/ajouter', 'CartController@store')->name('cart.store');
 Route::delete('/panier/{id}', 'CartController@destroy')->name('cart.destroy');
 
 Route::get('/paiement', 'StripeController@index')->name('stripe.index');
+Route::post('/paiement', 'StripeController@store')->name('stripe.store');
+Route::get('/remerciement', function() {
+    return view('stripe.thanks');
+});
 
 
 
 Route::get('/faq', 'FaqController@index')->name('faq');
 
 Route::get('/contact', 'ContactController@index')->name('contact.index');
-
-
 
 Auth::routes();
 

@@ -3,6 +3,9 @@
 
 <head>
     <title>Pranked</title>
+
+    @yield('extra-meta')
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
 
@@ -146,7 +149,7 @@
                     <span>SOUS-TOTAL</span><span> {{ getPrice(Cart::subtotal()) }}</span>
                     <br>
                     <br>
-                    <a href="{{ route('stripe.index') }}" class="blackred-btn text-center">PROCEDER AU PAIEMENT</a>
+                    <a href="{{ route('stripe.index') }}" class="blackred-btn text-center" id="submitButton">PROCEDER AU PAIEMENT</a>
                 </div>
                 <br>
                 <br> Les codes promo, les frais d'envoi et les taxes seront ajoutés à la caisse.
