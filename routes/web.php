@@ -27,15 +27,30 @@ Route::delete('/panier/{id}', 'CartController@destroy')->name('cart.destroy');
 
 Route::get('/paiement', 'StripeController@index')->name('stripe.index');
 Route::post('/paiement', 'StripeController@store')->name('stripe.store');
-Route::get('/remerciement', function() {
-    return view('stripe.thanks');
-});
+Route::get('/remerciement', 'StripeController@thanks')->name('stripe.thanks');
+
 
 
 
 Route::get('/faq', 'FaqController@index')->name('faq');
 
 Route::get('/contact', 'ContactController@index')->name('contact.index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
