@@ -23,7 +23,8 @@ Route::get('/', 'ProductController@index')->name('products.index');
 Route::get('/shop/{slug}', 'ProductController@show')->name('products.show');
 
 Route::post('/panier/ajouter', 'CartController@store')->name('cart.store');
-Route::delete('/panier/{id}', 'CartController@destroy')->name('cart.destroy');
+Route::patch('/panier/{product}', 'CartController@update')->name('cart.update');
+Route::delete('/panier/{product}', 'CartController@destroy')->name('cart.destroy');
 
 Route::get('/paiement', 'StripeController@index')->name('stripe.index');
 Route::post('/paiement', 'StripeController@store')->name('stripe.store');

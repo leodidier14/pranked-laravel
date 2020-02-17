@@ -4,6 +4,8 @@
 <head>
     <title>Pranked</title>
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     @yield('extra-meta')
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -85,6 +87,11 @@
         {{ session('success') }}
     </div>
     @endif
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
     @yield('content')
 </div>
 
@@ -118,10 +125,14 @@
 
                         <th><img class="text-center item-content-shoppingcart" src="{{ $product->model->image }}"></th>
                         <td class="text-center td-table-shoppingcart size-content-shoppingcart">S</td>
-                        <td class="td-table-shoppingcart price-content-shoppingcart">
-                            <input type="text" class="form-control text-center">
+                        <td class="td-table-shoppingcart quantity-content-shoppingcart">
+                            <select name="quantity" class="custom-select text-center quantity" data-id="{{ $product->rowId }}">
+                                @for ($i = 1; $i < 5 + 1 ; $i++)
+                                <option {{ $product->qty == $i ? 'selected' : '' }}>{{ $i }}</option>
+                            @endfor
+                            </select>
                         </td>
-                        <td class="text-center td-table-shoppingcart price-content-shoppingcart">{{ $product->model->formattedprice() }}</td>
+                        <td class="text-center td-table-shoppingcart price-content-shoppingcart">{{ getPrice($product->subtotal()) }}</td>
                         <td class="text-center td-table-shoppingcart delete-content-shoppingcart">
 
                         <form action="{{ route('cart.destroy', $product->rowId) }}" method="POST">
@@ -175,8 +186,61 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
- <script src="https://kit.fontawesome.com/df589c232d.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="{{ url('/js/app.js') }}"></script>
+<script src="https://kit.fontawesome.com/df589c232d.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ url('/js/app.js') }}"></script>
+<script>
+   /* var qty = document.querySelectorAll('#qty');
+    Array.from(qty).forEach((element) => {
+        element.addEventListener('change', function () {
+            var rowId = element.getAttribute('data-id');
+            var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            fetch(`/panier/update/${rowId}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, *//*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                    },
+                    method: 'patch',
+                    body: JSON.stringify({
+                        qty: this.value
+                    })
+            }).then((data) => {
+                console.log(data);
+                location.reload();
+            }).catch((error) => {
+                console.log(error);
+            });
+        });
+    });*/
+
+    (function(){
+
+            const classname = document.querySelectorAll('.quantity')
+
+            Array.from(classname).forEach(function(element) {
+                element.addEventListener('change', function() {
+                    const id = element.getAttribute('data-id')
+                    //const productQuantity = element.getAttribute('data-productQuantity')
+
+                   axios.patch(`/panier/${id}`, {
+                        quantity: this.value
+                    })
+                    .then(function (response) {
+                        console.log(response);
+                        location.reload();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    // location.reload();
+                    });
+                })
+            })
+        })();
+
+</script>
 @yield('extra-js')
 
 </body>
