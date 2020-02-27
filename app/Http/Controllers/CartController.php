@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Validator;
@@ -54,7 +55,7 @@ class CartController extends Controller
         Cart::add($product->id, $product->name, 1, $product->price)
         ->associate('App\Product');
 
-        return redirect()->route('products.index')->with('success', 'Produit ajouté au panier');
+        return redirect()->route('products.index')->with('success', $product->name.'ajouté au panier');
 
     }
 
@@ -93,15 +94,21 @@ class CartController extends Controller
         $data = $request->json()->all();
 
         $validator = Validator::make($request->all(), [
-        'quantity' => 'required|numeric|between:1,5'
+        'quantity' => 'required|numeric|between:0,5'
         ]);
 
+        Log::info($data);
         if($validator->fails()) {
             Session::flash('error', 'La quantité du produit ne doit pas dépasser 5.');
             return response()->json(['error' => 'Cart Quantity Has Not Been Updated']);
         }
 
-        Cart::update($rowId, $data['quantity']);
+        if( $data['quantity'] == 0){
+            Cart::remove($rowId);
+        }
+        else {
+            Cart::update($rowId, $data['quantity']);
+        }
 
         Session::flash('danger', 'La quantité du produit est passée à ' . $data['quantity'] . '.');
         return response()->json(['success' => 'Cart Quantity Has Been Updated']);
@@ -115,9 +122,9 @@ class CartController extends Controller
      */
     public function destroy($rowId)
     {
-        Cart::remove($rowId);
+       /* Cart::remove($rowId);
 
-        return back()->with('success', 'Le produit a été supprimé');
+        return back()->with('success', 'Le produit a été supprimé');*/
 
     }
 }

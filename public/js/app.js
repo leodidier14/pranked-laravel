@@ -22,12 +22,22 @@ jQuery(function($){
       }
   });
 
+$('#btn-modal-shop').on('touchend click', function(){
+    console.log('modal');
+    var menu = $('.open-shoppingcart').attr('data-menu');
+    $(menu).toggleClass('shoppingcart__expanded');
+    $(menu).parent().toggleClass('shoppingcart__expanded');
+
+});
+
   });
+
 
 
      $(window).scroll(function(){
       $(".banner").css("opacity", 1 - $(window).scrollTop() / 200);
     });
 
-
+    $('#getCodeModal').modal({backdrop: 'static', keyboard: false})
+    $("#getCodeModal").modal('show');
 

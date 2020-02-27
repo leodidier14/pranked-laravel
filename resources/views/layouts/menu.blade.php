@@ -21,7 +21,7 @@
         <div class="navbar-collapse collapse w-100 order-1 order-lg-0 dual-collapse" id="left-menu-navbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('products.index') }}">
+                    <a class="nav-link {{ Route::currentRouteNamed('products.index') ? 'active' : '' }}" href="{{ route('products.index') }}">
                         <span class="red-textoverlay-link">SHOP</span>SHOP
                     </a>
                 </li>
@@ -31,7 +31,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('contact.index') }}">
+                    <a class="nav-link {{ Route::currentRouteNamed('contact.index') ? 'active' : '' }}" href="{{ route('contact.index') }}">
                         <span class="red-textoverlay-link">CONTACT</span>CONTACT
                     </a>
                 </li>
@@ -52,8 +52,8 @@
                         <span class="red-textoverlay-link">S'IDENTIFIER</span>S'IDENTIFIER
                     </a>
                 </li>
-                <li class="nav-item">
-                    <span class="open-shoppingcart" data-menu="#main-nav">
+                <li class="nav-item"  id="refresh3">
+                    <span class="open-shoppingcart" data-menu="#main-nav" id="refresh2">
 								<a class="nav-link" href="#" id="navbar-shoppingcart">
 									<i class="fas fa-shopping-cart" id="nb-shoppingcart">[{{ Cart::count() }}]</i>
 								</a>
@@ -81,25 +81,41 @@
 	  </div>
 </div>
 
-<div class="page-content">
+
     @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
+    <div class="modal" id="getCodeModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Info</h5>
+            </div>
+            <div class="modal-body">
+              <p>{{ session('success') }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="blackred-btn text-center" id="btn-modal-shop" data-dismiss="modal">PANIER</button>
+                <a type="button" class="blackred-btn text-center" href="{{ route('products.index') }}">SHOP</a>
+            </div>
+          </div>
+        </div>
+      </div>
     @endif
+
     @if(session('error'))
     <div class="alert alert-danger">
         {{ session('error') }}
     </div>
     @endif
+
+
     @yield('content')
-</div>
+
 
 <div style="background-color: white; height: 100px;">
 
 </div>
 
-    <div class="right-menu-shoppingcart">
+    <div class="right-menu-shoppingcart" id="right-menu-shoppingcart">
 
         <div id="main-nav" class="shoppingcart right-shoppingcart">
 
@@ -107,7 +123,7 @@
                 <span class="close-shoppingcart">✕</span>
                 <span class="menu-shopping-cart">PANIER</span>
             </div>
-
+            <div id="refresh">
             @if (Cart::count() > 0)
             <table class="table" id="table-shoppingcart">
                 <thead>
@@ -116,7 +132,7 @@
                         <th class="text-center" id="size-title-shoppingcart">Taille</th>
                         <th class="text-center" id="quantity-title-shoppingcart">Quantité</th>
                         <th class="text-center" id="price-title-shoppingcart">Prix</th>
-                        <th class="text-center" id="delete-title-shoppingcart"></th>
+                        {{-- <th class="text-center" id="delete-title-shoppingcart"></th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -127,21 +143,12 @@
                         <td class="text-center td-table-shoppingcart size-content-shoppingcart">S</td>
                         <td class="td-table-shoppingcart quantity-content-shoppingcart">
                             <select name="quantity" class="custom-select text-center quantity" data-id="{{ $product->rowId }}">
-                                @for ($i = 1; $i < 5 + 1 ; $i++)
+                                @for ($i = 0; $i < 5 + 1 ; $i++)
                                 <option {{ $product->qty == $i ? 'selected' : '' }}>{{ $i }}</option>
                             @endfor
                             </select>
                         </td>
                         <td class="text-center td-table-shoppingcart price-content-shoppingcart">{{ getPrice($product->subtotal()) }}</td>
-                        <td class="text-center td-table-shoppingcart delete-content-shoppingcart">
-
-                        <form action="{{ route('cart.destroy', $product->rowId) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="blackred-btn text-center">X</button>
-                        </form>
-
-                        </td>
 
                     </tr>
             @endforeach
@@ -153,7 +160,7 @@
 
             <div>
                 <div style="text-align: right">
-                    <span>SOUS-TOTAL</span><span> {{ getPrice(Cart::subtotal()) }}</span>
+                    <span>SOUS-TOTAL</span><span id="subtotal"> {{ getPrice(Cart::subtotal()) }}</span>
                     <br>
                     <br>
                     <a href="{{ route('stripe.index') }}" class="blackred-btn text-center" id="submitButton">PROCEDER AU PAIEMENT</a>
@@ -163,7 +170,7 @@
             </div>
 
         </div>
-
+    </div>
     </div>
 
     <footer>
@@ -183,62 +190,33 @@
         </ul>
         <a href="" class="red-copyright-link">@2020 PRANKED</a>
     </footer>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/df589c232d.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{ url('/js/app.js') }}"></script>
 <script>
-   /* var qty = document.querySelectorAll('#qty');
-    Array.from(qty).forEach((element) => {
-        element.addEventListener('change', function () {
-            var rowId = element.getAttribute('data-id');
-            var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            fetch(`/panier/update/${rowId}`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json, text-plain, *//*",
-                        "X-Requested-With": "XMLHttpRequest",
-                        "X-CSRF-TOKEN": token
-                    },
-                    method: 'patch',
-                    body: JSON.stringify({
-                        qty: this.value
-                    })
-            }).then((data) => {
-                console.log(data);
-                location.reload();
-            }).catch((error) => {
-                console.log(error);
-            });
+
+$(document).on('change', '.quantity', function(){
+    let id = $(this).attr('data-id') // $(this) is an instance of the current select changed
+    let quantityvalue = $(this).val()
+    axios.post(`/panier/${id}`, {
+        quantity: quantityvalue,
+        _method: 'patch'
+
+        })
+        .then(function (response) {
+           // console.log(response);
+           console.log("refresh");
+            $("#refresh").load(location.href + " #refresh");
+            $("#refresh2").load(location.href + " #refresh3");
+        })
+        .catch(function (error) {
+            console.log("erreur");
+           // console.log(error);
         });
-    });*/
-
-    (function(){
-
-            const classname = document.querySelectorAll('.quantity')
-
-            Array.from(classname).forEach(function(element) {
-                element.addEventListener('change', function() {
-                    const id = element.getAttribute('data-id')
-                    //const productQuantity = element.getAttribute('data-productQuantity')
-
-                   axios.patch(`/panier/${id}`, {
-                        quantity: this.value
-                    })
-                    .then(function (response) {
-                        console.log(response);
-                        location.reload();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    // location.reload();
-                    });
-                })
-            })
-        })();
+    });
 
 </script>
 @yield('extra-js')
