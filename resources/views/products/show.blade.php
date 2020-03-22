@@ -8,7 +8,7 @@
     </div>
 
     <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 item-shop" style="background-color:green ">
-        <img class="text-center item-content-shop" src="{{ $product->image }}">
+        <img class="text-center item-content-shop" src="{{ asset('storage/' . $product->image) }}">
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 item-shop" style="background-color:purple ">
         <br>{{ $product->name }}<br>{{ $product->formattedPrice() }}
