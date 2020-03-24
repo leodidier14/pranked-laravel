@@ -26,10 +26,16 @@ Route::post('/panier/ajouter', 'CartController@store')->name('cart.store');
 Route::patch('/panier/{rowId}', 'CartController@update')->name('cart.update');
 //Route::delete('/panier/{product}', 'CartController@destroy')->name('cart.destroy');
 
-Route::get('/paiement', 'StripeController@index')->name('stripe.index');
-Route::post('/paiement', 'StripeController@store')->name('stripe.store');
-Route::get('/remerciement', 'StripeController@thanks')->name('stripe.thanks');
 
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/paiement', 'StripeController@index')->name('stripe.index');
+    Route::post('/paiement', 'StripeController@store')->name('stripe.store');
+    Route::get('/remerciement', 'StripeController@thanks')->name('stripe.thanks');
+});
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
+    Voyager::routes();
+});
 
 
 
@@ -58,6 +64,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
+
+
+

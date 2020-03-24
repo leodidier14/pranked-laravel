@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
 
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     @yield('extra-script')
 
 
@@ -48,9 +49,7 @@
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse" id="right-menu-navbar">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span class="red-textoverlay-link">S'IDENTIFIER</span>S'IDENTIFIER
-                    </a>
+                    @include('partials.auth')
                 </li>
                 <li class="nav-item"  id="refresh3">
                     <span class="open-shoppingcart" data-menu="#main-nav" id="refresh2">
