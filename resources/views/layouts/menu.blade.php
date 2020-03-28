@@ -139,7 +139,7 @@
                     <tr>
 
                         <th><img class="text-center item-content-shoppingcart" src="{{ asset('storage/' . $product->model->image) }}"></th>
-                        <td class="text-center td-table-shoppingcart size-content-shoppingcart">S</td>
+                        <td class="text-center td-table-shoppingcart size-content-shoppingcart">{{ $product->options->size }}</td>
                         <td class="td-table-shoppingcart quantity-content-shoppingcart">
                             <select name="quantity" class="custom-select text-center quantity" data-id="{{ $product->rowId }}">
                                 @for ($i = 0; $i < 5 + 1 ; $i++)

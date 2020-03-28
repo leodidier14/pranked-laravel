@@ -1,6 +1,7 @@
 @extends('layouts.menu', ['title' => 'Mes commandes'])
 
 @section('content')
+
                     @foreach (Auth()->user()->orders as $order)
                         <div class="card">
                             <div class="card-header">
@@ -10,8 +11,9 @@
                                 <h6>Liste des produits</h6>
                                 @foreach (unserialize($order->products) as $product)
                                     <div>Nom du produit : {{ $product[0] }}</div>
-                                    <div>Prix : {{ getPrice($product[1]) }}</div>
+                                    <div>Taille : {{ $product[1] }}</div>
                                     <div>Quantité : {{ $product[2] }}</div>
+                                    <div>Prix : {{ getPrice($product[3]) }}</div>
                                 @endforeach
                             </div>
                         </div>

@@ -40,19 +40,18 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-
-        $duplicata = Cart::search(function ($cartItem, $rowId) use ($request) {
+        /*$duplicata = Cart::search(function ($cartItem, $rowId) use ($request) {
             return $cartItem->id == $request->product_id;
         });
 
-
         if ($duplicata->isNotEmpty()) {
             return redirect()->route('products.index')->with('success', 'Produit à déjà été ajouté au panier');
-        }
+        }*/
 
         $product = Product::find($request->product_id);
+        $size = $request->size;
 
-        Cart::add($product->id, $product->name, 1, $product->price)
+        Cart::add($product->id, $product->name, 1, $product->price, ['size' => $size])
         ->associate('App\Product');
 
         return redirect()->route('products.index')->with('success', $product->name.'ajouté au panier');

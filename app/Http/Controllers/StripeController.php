@@ -73,9 +73,10 @@ class StripeController extends Controller
         $i = 0;
 
         foreach (Cart::content() as $product) {
-            $products['product_' . $i][] = $product->model->title;
-            $products['product_' . $i][] = $product->model->price;
+            $products['product_' . $i][] = $product->model->name;
+            $products['product_' . $i][] = $product->options->size;
             $products['product_' . $i][] = $product->qty;
+            $products['product_' . $i][] = $product->model->price;
             $i++;
         }
 
