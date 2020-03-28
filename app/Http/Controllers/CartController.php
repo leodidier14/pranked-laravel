@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Size;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -49,9 +50,12 @@ class CartController extends Controller
         }*/
 
         $product = Product::find($request->product_id);
-        $size = $request->size;
+        if (!$product->sizes()->where('name', '=', $request->product_size)->exists())
+        {
+            return redirect()->route('products.index')->with('error', 'Erreur taille');
+        }
 
-        Cart::add($product->id, $product->name, 1, $product->price, ['size' => $size])
+        Cart::add($product->id, $product->name, 1, $product->price, ['size' => $request->product_size])
         ->associate('App\Product');
 
         return redirect()->route('products.index')->with('success', $product->name.'ajouté au panier');

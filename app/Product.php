@@ -12,4 +12,21 @@ class Product extends Model
 
         return '€' . number_format($price, 2, '.', ' ');
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Category', 'category_product');
+    }
+
+    public function sizes()
+    {
+        return $this->belongsToMany('App\Size', 'size_product');
+    }
+
+    public function styles()
+    {
+        return $this->belongsToMany('App\Style', 'style_product');
+    }
+
+
 }

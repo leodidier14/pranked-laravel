@@ -40,17 +40,17 @@
         <form action="{{ route('cart.store') }}" method="POST">
             @csrf
             <input type="hidden" name="product_id" value="{{ $product->id }}">
-            <select name="size" name="product_size">
-                <option>XS</option>
-                <option>S</option>
-                <option>M</option>
-                <option>L</option>
-                <option>XL</option>
+            <select name="product_size">
+                @foreach ($product->sizes as $size)
+                    <option>{{ $size->name }}</option>
+                @endforeach
             </select>
             <button type="submit" class="blackred-btn">AJOUTER AU PANIER</button>
         </form>
-        <br>{{ $product->description }}
-
+        <br>{{ $product->description }}<br>
+        @foreach ($product->styles as $style)
+         <option>{{ $style->name }}</option>
+        @endforeach
     </div>
 @endsection
 

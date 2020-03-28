@@ -7,6 +7,9 @@
     <a href="{{ route('products.show', $product->slug) }}">
         <img  class="text-center item-content-shop" src="{{ asset('storage/' . $product->image) }}">
         <br>{{ $product->name }}<br>{{ $product->formattedPrice() }}
+        @foreach ($product->categories as $category)
+            <br>Catégorie : {{ $category->name }}
+        @endforeach
     </a>
       </div>
       @endforeach
